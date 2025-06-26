@@ -1,0 +1,21 @@
+System name:
+scummvm
+
+Full system name:
+ScummVM Game Engine
+
+Supported file extensions:
+.scummvm .SCUMMVM .svm .SVM
+
+Launch command:
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\scummvm_libretro.dll %ROM%
+
+Alternative launch commands:
+%STARTDIR%=%GAMEDIR% %EMULATOR_SCUMMVM% %BASENAME%
+%STARTDIR%=%GAMEDIR% %EMULATOR_DREAMM% .
+
+Platform (for scraping):
+scummvm
+
+Theme folder:
+scummvm

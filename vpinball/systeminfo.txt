@@ -1,0 +1,17 @@
+System name:
+vpinball
+
+Full system name:
+Visual Pinball
+
+Supported file extensions:
+.vpt .VPT .vpx .VPX
+
+Launch command:
+%EMULATOR_VISUAL-PINBALL% -minimized -play %ROM%
+
+Platform (for scraping):
+vpinball
+
+Theme folder:
+vpinball

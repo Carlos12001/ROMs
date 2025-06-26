@@ -1,0 +1,21 @@
+System name:
+cdimono1
+
+Full system name:
+Philips CD-i
+
+Supported file extensions:
+.chd .CHD .cue .CUE .iso .ISO
+
+Launch command:
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\same_cdi_libretro.dll %ROM%
+
+Alternative launch commands:
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\cdi2015_libretro.dll %ROM%
+%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\cdimono1 cdimono1 -cdrom %ROM%
+
+Platform (for scraping):
+cdimono1
+
+Theme folder:
+cdimono1

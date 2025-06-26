@@ -1,0 +1,17 @@
+System name:
+3do
+
+Full system name:
+3DO Interactive Multiplayer
+
+Supported file extensions:
+.bin .BIN .chd .CHD .cue .CUE .iso .ISO .7z .7Z .zip .ZIP
+
+Launch command:
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\opera_libretro.dll %ROM%
+
+Platform (for scraping):
+3do
+
+Theme folder:
+3do

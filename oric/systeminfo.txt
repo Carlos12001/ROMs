@@ -1,0 +1,20 @@
+System name:
+oric
+
+Full system name:
+Tangerine Computer Systems Oric
+
+Supported file extensions:
+.dsk .DSK .ort .ORT .tap .TAP .wav .WAV
+
+Launch command:
+%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\oric oric1 -autoboot_delay "4" -autoboot_command "cload\"\"\n" -cass %ROM%
+
+Alternative launch command:
+%STARTDIR%=%EMUDIR% %EMULATOR_ORICUTRON% %ROM%
+
+Platform (for scraping):
+oric
+
+Theme folder:
+oric

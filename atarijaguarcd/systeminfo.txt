@@ -1,0 +1,17 @@
+System name:
+atarijaguarcd
+
+Full system name:
+Atari Jaguar CD
+
+Supported file extensions:
+.abs .ABS .bin .BIN .cdi .CDI .cof .COF .cue .CUE .j64 .J64 .jag .JAG .prg .PRG .rom .ROM .7z .7Z .zip .ZIP
+
+Launch command:
+%STARTDIR%=%EMUDIR% %EMULATOR_BIGPEMU% %ROM%
+
+Platform (for scraping):
+atarijaguarcd
+
+Theme folder:
+atarijaguarcd

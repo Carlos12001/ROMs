@@ -1,0 +1,22 @@
+System name:
+naomi2
+
+Full system name:
+Sega NAOMI 2
+
+Supported file extensions:
+.bin .BIN .dat .DAT .elf .ELF .lst .LST .7z .7Z .zip .ZIP
+
+Launch command:
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\flycast_libretro.dll %ROM%
+
+Alternative launch commands:
+%EMULATOR_FLYCAST% %ROM%
+%EMULATOR_FLYCAST-DOJO% %ROM%
+%EMULATOR_DEMUL% -run=naomi -rom=%BASENAME%
+
+Platform (for scraping):
+arcade
+
+Theme folder:
+naomi2

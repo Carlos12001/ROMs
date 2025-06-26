@@ -1,0 +1,17 @@
+System name:
+steam
+
+Full system name:
+Valve Steam
+
+Supported file extensions:
+.bat .BAT .lnk .LNK .url .URL
+
+Launch command:
+%HIDEWINDOW% %ESCAPESPECIALS% %RUNINBACKGROUND% %EMULATOR_OS-SHELL% /C %ROM%
+
+Platform (for scraping):
+steam
+
+Theme folder:
+steam

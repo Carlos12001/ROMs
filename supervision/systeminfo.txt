@@ -1,0 +1,21 @@
+System name:
+supervision
+
+Full system name:
+Watara Supervision
+
+Supported file extensions:
+.bin .BIN .sv .SV .7z .7Z .zip .ZIP
+
+Launch command:
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\potator_libretro.dll %ROM%
+
+Alternative launch commands:
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "svision -rompath \"%GAMEDIRRAW%;%ROMPATH%\supervision\" -cart \"%ROMRAW%\""
+%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\supervision svision -cart %ROM%
+
+Platform (for scraping):
+supervision
+
+Theme folder:
+supervision

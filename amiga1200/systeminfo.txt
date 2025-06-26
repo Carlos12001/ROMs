@@ -1,0 +1,21 @@
+System name:
+amiga1200
+
+Full system name:
+Commodore Amiga 1200
+
+Supported file extensions:
+.adf .ADF .adz .ADZ .ccd .CCD .chd .CHD .cue .CUE .dms .DMS .fdi .FDI .hdf .HDF .hdz .HDZ .ipf .IPF .iso .ISO .lha .LHA .m3u .M3U .mds .MDS .nrg .NRG .rp9 .RP9 .uae .UAE .7z .7Z .zip .ZIP
+
+Launch command:
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\puae_libretro.dll %ROM%
+
+Alternative launch commands:
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\puae2021_libretro.dll %ROM%
+%EMULATOR_FS-UAE% %ROM%
+
+Platform (for scraping):
+amiga
+
+Theme folder:
+amiga1200

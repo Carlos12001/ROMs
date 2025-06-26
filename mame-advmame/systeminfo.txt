@@ -1,0 +1,17 @@
+System name:
+mame-advmame
+
+Full system name:
+AdvanceMAME
+
+Supported file extensions:
+.7z .7Z .zip .ZIP
+
+Launch command:
+%STARTDIR%=%EMUDIR% %EMULATOR_ADVANCEMAME% %BASENAME%
+
+Platform (for scraping):
+arcade
+
+Theme folder:
+mame-advmame

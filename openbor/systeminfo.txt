@@ -1,0 +1,17 @@
+System name:
+openbor
+
+Full system name:
+OpenBOR Game Engine
+
+Supported file extensions:
+.exe .EXE .lnk .LNK
+
+Launch command:
+%HIDEWINDOW% %ESCAPESPECIALS% %STARTDIR%=%GAMEDIR% %EMULATOR_OS-SHELL% /C %ROM%
+
+Platform (for scraping):
+openbor
+
+Theme folder:
+openbor

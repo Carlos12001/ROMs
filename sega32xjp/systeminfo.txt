@@ -1,0 +1,20 @@
+System name:
+sega32xjp
+
+Full system name:
+Sega Super 32X
+
+Supported file extensions:
+.32x .32X .68k .68K .bin .BIN .chd .CHD .cue .CUE .gen .GEN .iso .ISO .m3u .M3U .md .MD .smd .SMD .sms .SMS .7z .7Z .zip .ZIP
+
+Launch command:
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\picodrive_libretro.dll %ROM%
+
+Alternative launch command:
+%EMULATOR_ARES% --fullscreen --system "Mega 32X" %ROM%
+
+Platform (for scraping):
+sega32x
+
+Theme folder:
+sega32xjp

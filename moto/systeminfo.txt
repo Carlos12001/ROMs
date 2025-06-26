@@ -1,0 +1,17 @@
+System name:
+moto
+
+Full system name:
+Thomson MO/TO Series
+
+Supported file extensions:
+.fd .FD .k7 .K7 .m5 .M5 .m7 .M7 .rom .ROM .sap .SAP .7z .7Z .zip .ZIP
+
+Launch command:
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\theodore_libretro.dll %ROM%
+
+Platform (for scraping):
+moto
+
+Theme folder:
+moto

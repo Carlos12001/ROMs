@@ -1,0 +1,22 @@
+System name:
+neogeocd
+
+Full system name:
+SNK Neo Geo CD
+
+Supported file extensions:
+.chd .CHD .cue .CUE
+
+Launch command:
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\neocd_libretro.dll %ROM%
+
+Alternative launch commands:
+%EMULATOR_RETROARCH% --subsystem neocd -L %CORE_RETROARCH%\fbneo_libretro.dll %ROM%
+%STARTDIR%=%EMUDIR% %EMULATOR_FINALBURN-NEO% neocdz -cd %ROM%
+%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\neogeocd neocdz -cdrm %ROM%
+
+Platform (for scraping):
+neogeocd
+
+Theme folder:
+neogeocd

@@ -1,0 +1,23 @@
+System name:
+doom
+
+Full system name:
+Doom
+
+Supported file extensions:
+.bat .BAT .ipk3 .IPK3 .iwad .IWAD .lnk .LNK .pk3 .PK3 .pk4 .PK4 .pwad .PWAD .wad .WAD
+
+Launch command:
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\prboom_libretro.dll %ROM%
+
+Alternative launch commands:
+%EMULATOR_PRBOOM-PLUS% -iwad %ROM%
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\boom3_libretro.dll %ROM%
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\boom3_xp_libretro.dll %ROM%
+%HIDEWINDOW% %ESCAPESPECIALS% %EMULATOR_OS-SHELL% /C %ROM%
+
+Platforms (for scraping):
+pc, pcwindows
+
+Theme folder:
+doom

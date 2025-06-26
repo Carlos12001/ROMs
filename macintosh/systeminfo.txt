@@ -1,0 +1,24 @@
+System name:
+macintosh
+
+Full system name:
+Apple Macintosh
+
+Supported file extensions:
+.dsk .DSK .game .GAME
+
+Launch command:
+%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\macintosh macse -flop1 %ROM%
+
+Alternative launch commands:
+%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\macintosh macse -flop1 %GAMEDIR%\boot.dsk -flop2 %ROM%
+%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\macintosh macplus -flop1 %ROM%
+%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\macintosh macplus -flop1 %GAMEDIR%\boot.dsk -flop2 %ROM%
+%STARTDIR%=%EMUDIR% %EMULATOR_BASILISKII% --nogui true
+%STARTDIR%=%EMUDIR% %EMULATOR_SHEEPSHAVER%
+
+Platform (for scraping):
+macintosh
+
+Theme folder:
+macintosh

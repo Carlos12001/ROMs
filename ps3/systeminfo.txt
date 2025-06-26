@@ -1,0 +1,21 @@
+System name:
+ps3
+
+Full system name:
+Sony PlayStation 3
+
+Supported file extensions:
+.lnk .LNK .ps3 .PS3 .ps3dir .PS3DIR
+
+Launch command:
+%HIDEWINDOW% %ESCAPESPECIALS% %EMULATOR_OS-SHELL% /C %ROM%
+
+Alternative launch commands:
+%EMULATOR_RPCS3% --no-gui %RPCS3_GAMEID%:%INJECT%=%BASENAME%.ps3
+%EMULATOR_RPCS3% --no-gui %ROM%
+
+Platform (for scraping):
+ps3
+
+Theme folder:
+ps3

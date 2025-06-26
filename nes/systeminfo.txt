@@ -1,0 +1,29 @@
+System name:
+nes
+
+Full system name:
+Nintendo Entertainment System
+
+Supported file extensions:
+.3dsen .3DSEN .fds .FDS .nes .NES .unf .UNF .unif .UNIF .7z .7Z .zip .ZIP
+
+Launch command:
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mesen_libretro.dll %ROM%
+
+Alternative launch commands:
+%EMULATOR_MESEN% --fullscreen %ROM%
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\nestopia_libretro.dll %ROM%
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\fceumm_libretro.dll %ROM%
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\quicknes_libretro.dll %ROM%
+%EMULATOR_PUNES% -u yes %ROM%
+%EMULATOR_MEDNAFEN% -force_module nes %ROM%
+%EMULATOR_ARES% --fullscreen --system "Famicom" %ROM%
+%EMULATOR_ARES% --fullscreen --system "Famicom Disk System" %ROM%
+%EMULATOR_JGENESIS% --file-path %ROM%
+%EMULATOR_3DSEN% -id=%INJECT%=%BASENAME%.3dsen
+
+Platform (for scraping):
+nes
+
+Theme folder:
+nes

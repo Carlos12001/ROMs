@@ -1,0 +1,20 @@
+System name:
+apple2gs
+
+Full system name:
+Apple IIGS
+
+Supported file extensions:
+.2mg .2MG .7z .7z .zip .ZIP
+
+Launch command:
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "apple2gs -rompath \"%GAMEDIRRAW%;%ROMPATH%\apple2gs\" -gameio joy -flop3 \"%GAMEDIRRAW%\%FILENAME%\""
+
+Alternative launch command:
+%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\apple2gs apple2gs -gameio joy -flop3 %ROM%
+
+Platform (for scraping):
+apple2gs
+
+Theme folder:
+apple2gs

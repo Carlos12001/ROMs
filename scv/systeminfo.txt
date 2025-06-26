@@ -1,0 +1,20 @@
+System name:
+scv
+
+Full system name:
+Epoch Super Cassette Vision
+
+Supported file extensions:
+.0 .bin .BIN .7z .7Z .zip .ZIP
+
+Launch command:
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "scv -rompath \"%GAMEDIRRAW%;%ROMPATH%\scv\" -cart \"%ROMRAW%\""
+
+Alternative launch command:
+%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\scv scv -cart %ROM%
+
+Platform (for scraping):
+scv
+
+Theme folder:
+scv

@@ -1,0 +1,22 @@
+System name:
+wonderswancolor
+
+Full system name:
+Bandai WonderSwan Color
+
+Supported file extensions:
+.pc2 .PC2 .ws .WS .wsc .WSC .7z .7Z .zip .ZIP
+
+Launch command:
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mednafen_wswan_libretro.dll %ROM%
+
+Alternative launch commands:
+%EMULATOR_MEDNAFEN% -force_module wswan %ROM%
+%EMULATOR_ARES% --fullscreen --system "WonderSwan Color" %ROM%
+%EMULATOR_MESEN% --fullscreen %ROM%
+
+Platform (for scraping):
+wonderswancolor
+
+Theme folder:
+wonderswancolor

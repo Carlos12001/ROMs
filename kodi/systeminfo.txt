@@ -1,0 +1,17 @@
+System name:
+kodi
+
+Full system name:
+Kodi Home Theatre Software
+
+Supported file extensions:
+.bat .BAT .lnk .LNK
+
+Launch command:
+%HIDEWINDOW% %ESCAPESPECIALS% %RUNINBACKGROUND% %EMULATOR_OS-SHELL% /C %ROM%
+
+Platform (for scraping):
+pcwindows
+
+Theme folder:
+kodi

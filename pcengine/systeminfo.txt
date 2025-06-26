@@ -1,0 +1,24 @@
+System name:
+pcengine
+
+Full system name:
+NEC PC Engine
+
+Supported file extensions:
+.ccd .CCD .chd .CHD .cue .CUE .img .IMG .iso .ISO .m3u .M3U .pce .PCE .sgx .SGX .toc .TOC .7z .7Z .zip .ZIP
+
+Launch command:
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mednafen_pce_libretro.dll %ROM%
+
+Alternative launch commands:
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mednafen_pce_fast_libretro.dll %ROM%
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mednafen_supergrafx_libretro.dll %ROM%
+%EMULATOR_MEDNAFEN% -force_module pce %ROM%
+%EMULATOR_MESEN% --fullscreen %ROM%
+%EMULATOR_ARES% --fullscreen --system "PC Engine" %ROM%
+
+Platform (for scraping):
+pcengine
+
+Theme folder:
+pcengine

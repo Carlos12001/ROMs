@@ -1,0 +1,22 @@
+System name:
+model2
+
+Full system name:
+Sega Model 2
+
+Supported file extensions:
+.7z .7Z .zip .ZIP
+
+Launch command:
+%RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_M2EMULATOR% %BASENAME%
+
+Alternative launch commands:
+%STARTDIR%=%EMUDIR% %EMULATOR_M2EMULATOR% %BASENAME%
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll %ROM%
+%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\model2 %BASENAME%
+
+Platform (for scraping):
+arcade
+
+Theme folder:
+model2

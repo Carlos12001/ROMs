@@ -1,0 +1,22 @@
+System name:
+lcdgames
+
+Full system name:
+LCD Handheld Games
+
+Supported file extensions:
+.mgw .MGW .7z .7Z .zip .ZIP
+
+Launch command:
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll %ROM%
+
+Alternative launch commands:
+%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -artpath %ROMPATH%\lcdgames\artwork -rompath %GAMEDIR%\;%ROMPATH%\lcdgames %BASENAME%
+%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\lcdgames %BASENAME%
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\gw_libretro.dll %ROM%
+
+Platforms (for scraping):
+lcdgames, gameandwatch
+
+Theme folder:
+lcdgames

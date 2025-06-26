@@ -1,0 +1,20 @@
+System name:
+gamecom
+
+Full system name:
+Tiger Electronics Game.com
+
+Supported file extensions:
+.tgc .TGC .7z .7Z .zip .ZIP
+
+Launch command:
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll "gamecom -rompath \"%GAMEDIRRAW%;%ROMPATH%\gamecom\" -cartridge1 \"%ROMRAW%\""
+
+Alternative launch command:
+%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\gamecom gamecom -cartridge1 %ROM%
+
+Platform (for scraping):
+gamecom
+
+Theme folder:
+gamecom

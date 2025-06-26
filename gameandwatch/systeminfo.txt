@@ -1,0 +1,22 @@
+System name:
+gameandwatch
+
+Full system name:
+Nintendo Game and Watch
+
+Supported file extensions:
+.mgw .MGW .7z .7Z .zip .ZIP
+
+Launch command:
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll %ROM%
+
+Alternative launch commands:
+%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -artpath %ROMPATH%\gameandwatch\artwork -rompath %GAMEDIR%\;%ROMPATH%\gameandwatch %BASENAME%
+%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\gameandwatch %BASENAME%
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\gw_libretro.dll %ROM%
+
+Platform (for scraping):
+gameandwatch
+
+Theme folder:
+gameandwatch

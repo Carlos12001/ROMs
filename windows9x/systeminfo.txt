@@ -1,0 +1,22 @@
+System name:
+windows9x
+
+Full system name:
+Microsoft Windows 9x
+
+Supported file extensions:
+.bat .BAT .dosz .DOSZ .lnk .LNK .7z .7Z .zip .ZIP
+
+Launch command:
+%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-X% -defaultdir %GAMEDIR% %ROM%
+
+Alternative launch commands:
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\dosbox_pure_libretro.dll %ROM%
+%HIDEWINDOW% %ESCAPESPECIALS% %EMULATOR_OS-SHELL% /C %ROM%
+%HIDEWINDOW% %ESCAPESPECIALS% %RUNINBACKGROUND% %EMULATOR_OS-SHELL% /C %ROM%
+
+Platform (for scraping):
+pcwindows
+
+Theme folder:
+windows9x

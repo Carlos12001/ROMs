@@ -1,0 +1,21 @@
+System name:
+ps4
+
+Full system name:
+Sony PlayStation 4
+
+Supported file extensions:
+.bin .BIN .lnk .LNK .ps4 .PS4
+
+Launch command:
+%HIDEWINDOW% %ESCAPESPECIALS% %EMULATOR_OS-SHELL% /C %ROM%
+
+Alternative launch commands:
+%EMULATOR_SHADPS4% -g %INJECT%=%BASENAME%.ps4
+%EMULATOR_SHADPS4% %ROM%
+
+Platform (for scraping):
+ps4
+
+Theme folder:
+ps4

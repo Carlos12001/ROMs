@@ -1,0 +1,24 @@
+System name:
+dragon32
+
+Full system name:
+Dragon Data Dragon 32
+
+Supported file extensions:
+.cas .CAS .ccc .CCC .dsk .DSK .rom .ROM .7z .7Z .zip .ZIP
+
+Launch command:
+%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\dragon32 dragon32 -autoboot_delay "4" -autoboot_command "cloadm\"\"\n" -cass %ROM%
+
+Alternative launch commands:
+%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\dragon32 dragon32 -cart %ROM%
+%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\dragon32 dragon64 -autoboot_delay "4" -autoboot_command "cloadm\"\"\n" -cass %ROM%
+%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\dragon32 dragon64 -cart %ROM%
+%STARTDIR%=%EMUDIR% %EMULATOR_XROAR% -fs -default-machine dragon32 %ROM%
+%STARTDIR%=%EMUDIR% %EMULATOR_XROAR% -fs -default-machine dragon64 %ROM%
+
+Platform (for scraping):
+dragon32
+
+Theme folder:
+dragon32

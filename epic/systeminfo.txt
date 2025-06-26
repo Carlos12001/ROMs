@@ -1,0 +1,17 @@
+System name:
+epic
+
+Full system name:
+Epic Games Store
+
+Supported file extensions:
+.bat .BAT .lnk .LNK .url .URL
+
+Launch command:
+%HIDEWINDOW% %ESCAPESPECIALS% %RUNINBACKGROUND% %EMULATOR_OS-SHELL% /C %ROM%
+
+Platform (for scraping):
+pcwindows
+
+Theme folder:
+epic

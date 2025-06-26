@@ -1,0 +1,20 @@
+System name:
+switch
+
+Full system name:
+Nintendo Switch
+
+Supported file extensions:
+.lnk .LNK .nca .NCA .nro .NRO .nso .NSO .nsp .NSP .xci .XCI
+
+Launch command:
+%EMULATOR_RYUJINX% %ROM%
+
+Alternative launch command:
+%HIDEWINDOW% %ESCAPESPECIALS% %EMULATOR_OS-SHELL% /C %ROM%
+
+Platform (for scraping):
+switch
+
+Theme folder:
+switch

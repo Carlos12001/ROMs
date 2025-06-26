@@ -1,0 +1,22 @@
+System name:
+stv
+
+Full system name:
+Sega Titan Video Game System
+
+Supported file extensions:
+.7z .7Z .zip .ZIP
+
+Launch command:
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\kronos_libretro.dll %ROM%
+
+Alternative launch commands:
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll %ROM%
+%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\stv %BASENAME%
+%EMULATOR_MEDNAFEN% -force_module ss %ROM%
+
+Platform (for scraping):
+arcade
+
+Theme folder:
+stv

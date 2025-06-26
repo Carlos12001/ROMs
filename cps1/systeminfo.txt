@@ -1,0 +1,28 @@
+System name:
+cps1
+
+Full system name:
+Capcom Play System I
+
+Supported file extensions:
+.7z .7Z .zip .ZIP
+
+Launch command:
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll %ROM%
+
+Alternative launch commands:
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame2010_libretro.dll %ROM%
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame2003_plus_libretro.dll %ROM%
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame2003_libretro.dll %ROM%
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame2000_libretro.dll %ROM%
+%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\cps1 %BASENAME%
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\fbneo_libretro.dll %ROM%
+%STARTDIR%=%EMUDIR% %EMULATOR_FINALBURN-NEO% %BASENAME%
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\fbalpha2012_libretro.dll %ROM%
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\fbalpha2012_cps1_libretro.dll %ROM%
+
+Platform (for scraping):
+arcade
+
+Theme folder:
+cps1

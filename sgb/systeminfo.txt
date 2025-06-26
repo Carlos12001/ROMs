@@ -1,0 +1,23 @@
+System name:
+sgb
+
+Full system name:
+Nintendo Super Game Boy
+
+Supported file extensions:
+.gb .GB .gbc .GBC .sgb .SGB .7z .7Z .zip .ZIP
+
+Launch command:
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mesen-s_libretro.dll %ROM%
+
+Alternative launch commands:
+%EMULATOR_MESEN% --fullscreen --gameBoy.useSgb2=true %ROM%
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\sameboy_libretro.dll %ROM%
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mgba_libretro.dll %ROM%
+%EMULATOR_MGBA% -f %ROM%
+
+Platform (for scraping):
+sgb
+
+Theme folder:
+sgb

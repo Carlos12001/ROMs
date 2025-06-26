@@ -1,0 +1,20 @@
+System name:
+vircon32
+
+Full system name:
+Vircon32 Virtual Console
+
+Supported file extensions:
+.v32 .V32 .7z .7Z .zip .ZIP
+
+Launch command:
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\vircon32_libretro.dll %ROM%
+
+Alternative launch command:
+%EMULATOR_VIRCON32% %ROM%
+
+Platform (for scraping):
+vircon32
+
+Theme folder:
+vircon32

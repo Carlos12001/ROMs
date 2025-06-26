@@ -1,0 +1,17 @@
+System name:
+ags
+
+Full system name:
+Adventure Game Studio Game Engine
+
+Supported file extensions:
+.bat .BAT .lnk .LNK
+
+Launch command:
+%HIDEWINDOW% %ESCAPESPECIALS% %EMULATOR_OS-SHELL% /C %ROM%
+
+Platform (for scraping):
+pcwindows
+
+Theme folder:
+ags

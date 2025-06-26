@@ -1,0 +1,12 @@
+# Ignorar todo
+*
+
+# Pero NO ignorar los directorios (necesario para buscar en subcarpetas)
+!*/
+
+# NO ignorar los archivos específicos
+!systems.txt
+!systeminfo.txt
+
+# NO ignorar el propio .gitignore
+!.gitignore

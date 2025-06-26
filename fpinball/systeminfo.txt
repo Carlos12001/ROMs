@@ -1,0 +1,17 @@
+System name:
+fpinball
+
+Full system name:
+Future Pinball
+
+Supported file extensions:
+.fpt .FPT
+
+Launch command:
+%EMULATOR_FUTURE-PINBALL% /Exit /Play /Open %ROM%
+
+Platform (for scraping):
+fpinball
+
+Theme folder:
+fpinball

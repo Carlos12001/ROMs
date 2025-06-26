@@ -1,0 +1,20 @@
+System name:
+zxnext
+
+Full system name:
+Sinclair ZX Spectrum Next
+
+Supported file extensions:
+.nex .NEX .sna .SNA
+
+Launch command:
+%STARTDIR%=%GAMEDIR% %EMULATOR_CSPECT% -fullscreen -s28 -vsync -60 -analytics -tv -zxnext -mmc=.\ %ROM%
+
+Alternative launch command:
+%STARTDIR%=%EMUDIR% %EMULATOR_ZESARUX% --machine tbblue --realvideo --enabletimexvideo --tbblue-fast-boot-mode --enable-esxdos-handler --esxdos-root-dir %GAMEDIR% %ROM%
+
+Platform (for scraping):
+zxnext
+
+Theme folder:
+zxnext

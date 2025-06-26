@@ -1,0 +1,17 @@
+System name:
+samcoupe
+
+Full system name:
+MGT SAM Coupé
+
+Supported file extensions:
+.dsk .DSK .mgt .MGT .sad .SAD .sbt .SBT .7z .7Z .zip .ZIP
+
+Launch command:
+%EMULATOR_SIMCOUPE% %ROM%
+
+Platform (for scraping):
+samcoupe
+
+Theme folder:
+samcoupe

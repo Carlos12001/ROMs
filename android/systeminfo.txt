@@ -1,0 +1,17 @@
+System name:
+android
+
+Full system name:
+Google Android
+
+Supported file extensions:
+.lnk .LNK
+
+Launch command:
+%HIDEWINDOW% %ESCAPESPECIALS% %STARTDIR%=%EMUDIR% %EMULATOR_OS-SHELL% /C %ROM%
+
+Platform (for scraping):
+android
+
+Theme folder:
+android

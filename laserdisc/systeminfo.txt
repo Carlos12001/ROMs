@@ -1,0 +1,23 @@
+System name:
+laserdisc
+
+Full system name:
+LaserDisc Games
+
+Supported file extensions:
+.daphne .dirksimple .ogv .OGV .singe .7z .7Z .zip .ZIP
+
+Launch command:
+%EMULATOR_HYPSEUS-SINGE% %BASENAME% vldp -framefile %GAMEDIR%\%BASENAME%.txt %INJECT%=%BASENAME%.commands
+
+Alternative launch commands:
+%EMULATOR_HYPSEUS-SINGE% singe vldp -framefile %GAMEDIR%\%BASENAME%.txt -script %GAMEDIR%\%BASENAME%.singe %INJECT%=%BASENAME%.commands
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll %ROM%
+%HIDEWINDOW% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\laserdisc %BASENAME%
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\dirksimple_libretro.dll %ROM%
+
+Platforms (for scraping):
+daphne, arcade
+
+Theme folder:
+laserdisc

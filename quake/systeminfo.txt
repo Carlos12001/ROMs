@@ -1,0 +1,25 @@
+System name:
+quake
+
+Full system name:
+Quake
+
+Supported file extensions:
+.bat .BAT .lnk .LNK .pak .PAK .pk3 .PK3
+
+Launch command:
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\tyrquake_libretro.dll %ROM%
+
+Alternative launch commands:
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\vitaquake2_libretro.dll %ROM%
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\vitaquake2-rogue_libretro.dll %ROM%
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\vitaquake2-xatrix_libretro.dll %ROM%
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\vitaquake2-zaero_libretro.dll %ROM%
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\vitaquake3_libretro.dll %ROM%
+%HIDEWINDOW% %ESCAPESPECIALS% %EMULATOR_OS-SHELL% /C %ROM%
+
+Platforms (for scraping):
+pc, pcwindows
+
+Theme folder:
+quake

@@ -1,0 +1,21 @@
+System name:
+naomigd
+
+Full system name:
+Sega NAOMI GD-ROM
+
+Supported file extensions:
+.bin .BIN .dat .DAT .elf .ELF .lst .LST .7z .7Z .zip .ZIP
+
+Launch command:
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\flycast_libretro.dll %ROM%
+
+Alternative launch commands:
+%EMULATOR_FLYCAST% %ROM%
+%EMULATOR_FLYCAST-DOJO% %ROM%
+
+Platform (for scraping):
+arcade
+
+Theme folder:
+naomigd
