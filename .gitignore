@@ -10,3 +10,4 @@
 
 # NO ignorar el propio .gitignore
 !.gitignore
+!.README.md
