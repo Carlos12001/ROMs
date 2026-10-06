@@ -45,6 +45,7 @@ romsync_phone() {
     if ! is_mounted; then
       echo -e "\033[36mMounting phone...\033[0m"
       if ! aft-mtp-mount "$mount_dir" >/dev/null 2>&1; then
+        rmdir "$mount_dir" 2>/dev/null
         echo -e "\033[31mError: no phone found.\033[0m"
         echo -e "\033[33mPlug it in, unlock it and choose 'File transfer' in the USB notification.\033[0m"
         return 1
@@ -71,6 +72,8 @@ romsync_phone() {
     if is_mounted; then
       fusermount3 -u "$mount_dir" 2>/dev/null || fusermount -u "$mount_dir" 2>/dev/null
     fi
+    # Remove the empty mount point too
+    rmdir "$mount_dir" 2>/dev/null
   }
 
   # "size<TAB>path" for every file, sorted by path
@@ -224,21 +227,25 @@ romsync_phone() {
     mkdir -p "$phone_dir" || return 1
   fi
 
-  # Scratch lists go in the per-user runtime directory and are removed on any exit,
-  # including Ctrl+C or a lost connection, so nothing is left behind
-  work_dir="$(mktemp -d "${XDG_RUNTIME_DIR:-${TMPDIR:-/tmp}}/romsync-phone-work.XXXXXX")" || return 1
-  trap 'rm -rf "$work_dir"' EXIT
+  # Scratch lists go in the per-user runtime directory. On any exit, including
+  # Ctrl+C or a lost connection, they are removed and the phone is left as it
+  # was found, so nothing is left behind.
+  cleanup() {
+    [[ -n "$work_dir" ]] && rm -rf "$work_dir"
+    if [[ "$command" != "mount" && "$was_mounted" == false ]]; then
+      unmount_phone
+    fi
+  }
+  trap cleanup EXIT
   trap 'exit 130' INT TERM HUP
+
+  work_dir="$(mktemp -d "${XDG_RUNTIME_DIR:-${TMPDIR:-/tmp}}/romsync-phone-work.XXXXXX")" || return 1
 
   execute_commands
   local result=$?
-  rm -rf "$work_dir"
-  trap - EXIT INT TERM HUP
 
-  # Leave the phone as it was found, unless the user asked to mount it
-  if [[ "$command" != "mount" && "$was_mounted" == false ]]; then
-    unmount_phone
-  fi
+  cleanup
+  trap - EXIT INT TERM HUP
 
   return $result
 }
