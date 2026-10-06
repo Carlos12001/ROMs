@@ -1,109 +1,83 @@
 # ROMs
 
-Estructura de carpetas de ROMs (una por consola) y `romsync`, la herramienta que mantiene iguales la copia de la PC y la del disco externo **CarlosHD**.
+Carpetas de ROMs (una por consola) y `romsync`, que mantiene idénticas la copia de la PC y la del disco externo **CarlosHD**.
 
-Este repositorio **no contiene ROMs ni BIOS**: el `.gitignore` solo deja pasar los `systeminfo.txt`, `systems.txt`, este README y los scripts. Los juegos viajan entre equipos por el disco externo, no por Git.
+Este repositorio **no contiene juegos ni BIOS**: el `.gitignore` solo deja pasar los `systeminfo.txt`, `systems.txt`, este README y los scripts. Los juegos viajan entre equipos por el disco, no por Git.
 
-## 📁 Dónde está cada cosa
-
-| Lugar | Ruta |
-|-------|------|
+| | Ruta |
+|---|---|
 | Linux | `~/ROMs` |
 | Windows | `%USERPROFILE%\ROMs` |
-| Disco externo (etiqueta `CarlosHD`, exFAT) | `backup/ROMs` |
+| Disco `CarlosHD` (exFAT) | `backup/ROMs` |
 
-Carpetas con contenido propio:
+- `<consola>/`: los juegos de cada sistema.
+- `bios/`: respaldo de las BIOS de PS1, PS2 y DS. RetroArch no las lee de aquí; cómo instalarlas está en el repositorio [saves](https://github.com/Carlos12001/saves).
 
-- `bios/`: respaldo de las BIOS (PS1, PS2, melonDS DS). RetroArch no las lee de aquí; hay que copiarlas a su carpeta `system` (ver el README del repositorio de saves).
-- `<consola>/`: los juegos de cada sistema, con su `systeminfo.txt`.
+## Uso
 
-## 🔄 ¿Qué hace romsync?
+Conecta el disco y ejecuta:
 
-- Copia al disco lo que solo está en la PC, y a la PC lo que solo está en el disco.
-- Si un archivo existe en ambos lados pero cambió, se queda la versión **más reciente**.
-- Al terminar comprueba que ambos lados quedaron iguales.
-- **Nunca borra nada.** Para eliminar un juego hay que borrarlo en los dos lados; si se borra solo en uno, el siguiente `sync` lo vuelve a copiar.
+```bash
+romsync
+```
 
-No se sincronizan: `.git/` (cada lado tiene su propio clon), `builtin/` (historial que crea RetroArch) ni archivos del sistema (`$RECYCLE.BIN`, `System Volume Information`, `Thumbs.db`, `desktop.ini`, `.DS_Store`).
+| Comando | Qué hace |
+|---|---|
+| `romsync` / `romsync sync` | Copia lo nuevo o actualizado en ambos sentidos y comprueba que quedaron iguales |
+| `romsync status` | Lista qué difiere, sin copiar nada |
+| `romsync verify` | Compara el contenido de cada archivo con checksum (varios minutos con ~31 GB) |
+| `romsync open` | Abre la carpeta de ROMs del disco |
+| `romsync help` | Muestra la ayuda y las rutas en uso |
 
-## 🚀 Instalación
+## Cómo decide qué copiar
+
+- Un archivo que solo está en un lado se copia al otro.
+- Si está en ambos pero difiere en tamaño o fecha, gana el **más reciente**.
+- **Nunca borra.** Para eliminar un juego, bórralo en los dos lados; si lo borras solo en uno, el siguiente `sync` lo restaura.
+- `sync` y `status` comparan tamaño y fecha (rápido). Solo `verify` lee el contenido.
+
+No se sincronizan `.git/`, `builtin/` (historial que crea RetroArch) ni archivos del sistema (`$RECYCLE.BIN`, `System Volume Information`, `.Trash-*`, `Thumbs.db`, `desktop.ini`, `.DS_Store`).
+
+## Instalación
 
 ### Linux (Bash/Zsh)
 
-Requiere `rsync` y `udisks2` (para montar el disco sin root).
+Requiere `rsync` y `udisks2`. Si el disco está conectado pero sin montar, el script lo monta solo.
 
-1. Dale permisos de ejecución al script:
+```bash
+chmod +x ~/ROMs/romsync.sh
+```
 
-   ```bash
-   chmod +x ~/ROMs/romsync.sh
-   ```
+Agrega esto a `~/.bashrc` o `~/.zshrc` y abre una terminal nueva:
 
-2. Agrega un wrapper a tu `~/.bashrc` o `~/.zshrc`:
-
-   ```bash
-   romsync() {
-     command ~/ROMs/romsync.sh "$@"
-   }
-   ```
-
-3. Recarga tu shell:
-
-   ```bash
-   source ~/.bashrc   # o source ~/.zshrc
-   ```
+```bash
+romsync() {
+  command ~/ROMs/romsync.sh "$@"
+}
+```
 
 ### Windows (PowerShell)
 
-Usa `robocopy`, que ya viene con Windows.
+Usa `robocopy`, incluido en Windows. Copia el contenido de `romsync.ps1` en tu perfil y recárgalo:
 
-1. Abre tu perfil de PowerShell:
+```powershell
+notepad $PROFILE
+. $PROFILE
+```
 
-   ```powershell
-   notepad $PROFILE
-   ```
-
-2. Copia el contenido de `romsync.ps1` en ese archivo y recarga:
-
-   ```powershell
-   . $PROFILE
-   ```
-
-También se puede ejecutar sin instalar: `.\romsync.ps1 status`.
+Sin instalar también funciona: `.\romsync.ps1 status`.
 
 > [!WARNING]
-> `romsync.ps1` todavía no se ha probado en Windows; la versión de Linux sí. La primera vez ejecuta `romsync status` y revisa la lista antes de hacer `romsync sync`.
+> `romsync.ps1` no se ha probado todavía en Windows; `romsync.sh` sí. La primera vez ejecuta `romsync status` y revisa la lista antes de `romsync sync`.
 
-## 📝 Uso
+## Configuración
 
-```bash
-romsync           # Igual que 'romsync sync'
-romsync sync      # Copia lo nuevo/actualizado en ambos sentidos y comprueba el resultado
-romsync status    # Muestra qué difiere, sin copiar nada
-romsync verify    # Compara el contenido archivo por archivo con checksum (lento)
-romsync open      # Abre la carpeta de ROMs del disco
-romsync help      # Muestra la ayuda y las rutas en uso
-```
+Las rutas se cambian con variables de entorno, sin editar los scripts:
 
-### Flujo típico
-
-```bash
-# Conecta el disco CarlosHD
-romsync status    # Opcional: ver qué va a cambiar
-romsync sync      # Dejar PC y disco iguales
-```
-
-`status` y `sync` comparan por tamaño y fecha, que es rápido. `verify` lee todos los archivos de ambos lados (varios minutos con ~31 GB), así que solo hace falta de vez en cuando o si sospechas de una copia dañada.
-
-En Linux el script monta el disco solo si está conectado pero sin montar.
-
-## ⚙️ Configuración
-
-Las rutas se pueden cambiar con variables de entorno, sin editar los scripts:
-
-| Variable | Valor por defecto | Qué es |
-|----------|-------------------|--------|
-| `ROMS_DIR` | `~/ROMs` (Linux), `%USERPROFILE%\ROMs` (Windows) | Carpeta de ROMs en la PC |
-| `ROMS_DRIVE_LABEL` | `CarlosHD` | Etiqueta del disco externo |
+| Variable | Por defecto | Qué es |
+|---|---|---|
+| `ROMS_DIR` | `~/ROMs` o `%USERPROFILE%\ROMs` | Carpeta de ROMs en la PC |
+| `ROMS_DRIVE_LABEL` | `CarlosHD` | Etiqueta del disco |
 | `ROMS_DRIVE_SUBDIR` | `backup/ROMs` | Carpeta dentro del disco |
 
 ```bash
@@ -114,6 +88,6 @@ ROMS_DIR=/mnt/juegos/ROMs romsync status
 $env:ROMS_DIR = "D:\ROMs"; romsync status
 ```
 
-## 🧩 Git en el disco externo
+## Git en el disco
 
-La carpeta del disco también es un clon de este repositorio. Como `romsync` copia los scripts y el README como archivos normales pero no toca `.git/`, ahí `git status` mostrará cambios hasta que hagas `git pull`. No afecta a los juegos.
+La carpeta del disco también es un clon de este repositorio. `romsync` copia los scripts y el README como archivos normales pero no toca `.git/`, así que ahí `git status` mostrará cambios hasta que hagas `git pull`. No afecta a los juegos.
