@@ -37,12 +37,12 @@ romsync_phone() {
     fi
 
     # A mount left behind by an unplugged phone no longer answers: drop it and mount again
-    if mountpoint -q "$mount_dir" && ! ls "$mount_dir" >/dev/null 2>&1; then
+    if is_mounted && ! ls "$mount_dir" >/dev/null 2>&1; then
       unmount_phone
     fi
 
     mkdir -p "$mount_dir"
-    if ! mountpoint -q "$mount_dir"; then
+    if ! is_mounted; then
       echo -e "\033[36mMounting phone...\033[0m"
       if ! aft-mtp-mount "$mount_dir" >/dev/null 2>&1; then
         echo -e "\033[31mError: no phone found.\033[0m"
@@ -62,8 +62,13 @@ romsync_phone() {
     phone_dir="$storage/$phone_subdir"
   }
 
+  # True while the kernel still lists the mount, even if the phone behind it is gone
+  is_mounted() {
+    grep -q " $mount_dir fuse" /proc/mounts
+  }
+
   unmount_phone() {
-    if mountpoint -q "$mount_dir"; then
+    if is_mounted; then
       fusermount3 -u "$mount_dir" 2>/dev/null || fusermount -u "$mount_dir" 2>/dev/null
     fi
   }
@@ -208,8 +213,9 @@ romsync_phone() {
     return 1
   fi
 
+  # A dead mount does not count: it is replaced and removed again afterwards
   local was_mounted=false
-  mountpoint -q "$mount_dir" 2>/dev/null && was_mounted=true
+  is_mounted && ls "$mount_dir" >/dev/null 2>&1 && was_mounted=true
 
   mount_phone || return 1
 
