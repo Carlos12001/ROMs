@@ -31,8 +31,9 @@ bash -n romsync.sh romsync-phone.sh    # Syntax
 
 - Always run `status` before `sync` and review the list.
 - To test a copy, use a small temporary file and delete it on both sides afterwards.
-- A full copy is ~31 GB and takes a while (about 45 minutes to the phone). Start it as a detached process that logs to a file, not inside a command with a time limit.
+- A full copy is ~31 GB and takes a while (about 45 minutes to the phone). Start it as a detached process, not inside a command with a time limit. If its output must be kept, write it to a temporary file in the allowed locations of the global rules (never the home folder or this repository) and delete it when the copy ends.
 - `verify` reads every file; do not run it while another copy is in progress.
+- The scripts write no log files: progress goes to the terminal. `romsync-phone.sh` keeps its scratch lists in `$XDG_RUNTIME_DIR` and removes them on exit, even when interrupted. Keep it that way.
 - `romsync.ps1` cannot be tested on Linux: if you change it, say so in the README and to the user.
 
 ## Commits

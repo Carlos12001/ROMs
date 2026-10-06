@@ -224,10 +224,16 @@ romsync_phone() {
     mkdir -p "$phone_dir" || return 1
   fi
 
-  work_dir="$(mktemp -d)"
+  # Scratch lists go in the per-user runtime directory and are removed on any exit,
+  # including Ctrl+C or a lost connection, so nothing is left behind
+  work_dir="$(mktemp -d "${XDG_RUNTIME_DIR:-${TMPDIR:-/tmp}}/romsync-phone-work.XXXXXX")" || return 1
+  trap 'rm -rf "$work_dir"' EXIT
+  trap 'exit 130' INT TERM HUP
+
   execute_commands
   local result=$?
   rm -rf "$work_dir"
+  trap - EXIT INT TERM HUP
 
   # Leave the phone as it was found, unless the user asked to mount it
   if [[ "$command" != "mount" && "$was_mounted" == false ]]; then
