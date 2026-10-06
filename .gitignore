@@ -14,3 +14,7 @@
 
 # NO ignorar los scripts de sincronización
 !romsync*
+
+# NO ignorar las instrucciones para agentes
+!AGENTS.md
+!CLAUDE.md

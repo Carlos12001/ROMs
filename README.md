@@ -19,6 +19,21 @@ Este repositorio **no contiene juegos ni BIOS**: el `.gitignore` solo deja pasar
 - `<consola>/`: los juegos de cada sistema.
 - `bios/`: respaldo de las BIOS de PS1, PS2 y DS. RetroArch no las lee de aquí; cómo instalarlas está en el repositorio [saves](https://github.com/Carlos12001/saves).
 
+## Requisitos
+
+```bash
+sudo pacman -S --needed git openssh rsync udisks2 android-file-transfer
+```
+
+| Paquete | Para qué |
+|---|---|
+| `git`, `openssh` | Clonar y actualizar este repositorio por SSH |
+| `rsync` | Copiar y comparar los archivos (los dos scripts de Linux) |
+| `udisks2` | `romsync`: montar el disco externo sin root |
+| `android-file-transfer` | `romsync-phone`: montar el teléfono por USB (`aft-mtp-mount`) |
+
+En Windows no hay que instalar nada para `romsync.ps1`: usa `robocopy` y PowerShell, que vienen con el sistema. Solo hace falta [Git for Windows](https://git-scm.com/download/win) para clonar el repositorio.
+
 # Disco externo: romsync
 
 ## Uso
@@ -158,3 +173,7 @@ romsync-phone() {
 La carpeta del disco también es un clon de este repositorio. `romsync` copia los scripts y el README como archivos normales pero no toca `.git/`, así que ahí `git status` mostrará cambios hasta que hagas `git pull`. No afecta a los juegos.
 
 `romsync-phone` no copia ningún archivo rastreado por Git: en el teléfono esos archivos se actualizan con `git pull`.
+
+## Contribuir
+
+Las convenciones del repositorio (formato de commits, qué no se toca, cómo probar) están en [AGENTS.md](AGENTS.md). Valen igual para personas y para agentes de IA; `CLAUDE.md` solo lo importa.
