@@ -143,7 +143,7 @@ MTP does not keep file dates, so files are compared by **name and size**, not by
 - If it exists on both with a different size, the **largest** wins (the small one is almost always an interrupted copy).
 - **It never deletes.** To remove a game, delete it on both sides.
 
-Not synced: `.git/`, `builtin/`, `.thumbnails/` and the files Git carries (`systeminfo.txt`, `systems.txt`, `.gitignore`, `README.md`, `romsync*`).
+Not synced: `.git/`, `builtin/`, `.thumbnails/` and the files Git carries (`systeminfo.txt`, `systems.txt`, `.gitignore`, `README*.md`, `AGENTS.md`, `CLAUDE.md`, `romsync*`).
 
 ## Installation
 

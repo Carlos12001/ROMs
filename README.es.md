@@ -143,7 +143,7 @@ MTP no conserva la fecha de los archivos, así que aquí se compara por **nombre
 - Si está en ambos con distinto tamaño, gana el **más grande** (el pequeño es casi siempre una copia interrumpida).
 - **Nunca borra.** Para eliminar un juego, bórralo en los dos lados.
 
-No se sincronizan `.git/`, `builtin/`, `.thumbnails/` ni los archivos que lleva Git (`systeminfo.txt`, `systems.txt`, `.gitignore`, `README.md`, `romsync*`).
+No se sincronizan `.git/`, `builtin/`, `.thumbnails/` ni los archivos que lleva Git (`systeminfo.txt`, `systems.txt`, `.gitignore`, `README*.md`, `AGENTS.md`, `CLAUDE.md`, `romsync*`).
 
 ## Instalación
 

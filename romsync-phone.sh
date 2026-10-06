@@ -20,7 +20,9 @@ romsync_phone() {
     -not -name 'systeminfo.txt'
     -not -name 'systems.txt'
     -not -name '.gitignore'
-    -not -name 'README.md'
+    -not -name 'README*.md'
+    -not -name 'AGENTS.md'
+    -not -name 'CLAUDE.md'
     -not -name 'romsync*'
     -not -name '.nomedia'
     -not -name 'Thumbs.db'
@@ -155,7 +157,8 @@ romsync_phone() {
       differing="$(rsync -rn --checksum --out-format='%n' \
         --exclude='.git/' --exclude='builtin/' --exclude='.thumbnails/' \
         --exclude='systeminfo.txt' --exclude='systems.txt' --exclude='.gitignore' \
-        --exclude='README.md' --exclude='romsync*' --exclude='.nomedia' \
+        --exclude='README*.md' --exclude='AGENTS.md' --exclude='CLAUDE.md' \
+        --exclude='romsync*' --exclude='.nomedia' \
         "$local_dir/" "$phone_dir/" | grep -v '/$')"
       if [[ -z "$differing" ]]; then
         echo -e "\033[32mEvery laptop file has the same content on the phone.\033[0m"
