@@ -10,4 +10,7 @@
 
 # NO ignorar el propio .gitignore
 !.gitignore
-!.README.md
+!README.md
+
+# NO ignorar los scripts de sincronización
+!romsync.*
