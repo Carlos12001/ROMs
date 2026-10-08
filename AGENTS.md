@@ -41,8 +41,10 @@ bash -n romsync.sh romsync-phone.sh    # Syntax
 - Always run `status` before `sync` and review the list.
 - To test a copy, use a small temporary file and delete it on both sides
   afterwards.
-- A full copy is ~31 GB and takes a while (about 45 minutes to the phone). Start
-  it as a detached process, not inside a command with a time limit. If its
+- A full copy is ~31 GB to the drive and ~16 GB to the phone, which leaves out
+  the systems in `ROMS_PHONE_SKIP`, and takes a while (about 45 minutes for
+  31 GB over MTP). Start it as a detached process, not inside a command with a
+  time limit. If its
   output must be kept, write it to a temporary file in the allowed locations of
   the global rules (never the home folder or this repository) and delete it when
   the copy ends.

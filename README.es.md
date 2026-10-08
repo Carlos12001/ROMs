@@ -148,9 +148,9 @@ romsync-phone
 | `romsync-phone mount` | Monta el teléfono en `$XDG_RUNTIME_DIR/romsync-phone` y lo deja montado |
 | `romsync-phone unmount` | Lo desmonta |
 
-La primera copia completa (~31 GB) tarda unos 45 minutos a ~11 MB/s. Si se corta
-o se desconecta el cable, vuelve a ejecutar `romsync-phone`: continúa donde
-quedó.
+La primera copia completa tardó unos 45 minutos a ~11 MB/s cuando eran ~31 GB;
+sin las consolas pesadas son ~16 GB. Si se corta o el cable se desconecta,
+vuelve a ejecutar `romsync-phone`: continúa donde quedó.
 
 ### Teléfono: cómo decide qué copiar
 
@@ -165,6 +165,36 @@ tamaño**, no por fecha:
 No se sincronizan `.git/`, `builtin/`, `.thumbnails/` ni los archivos que lleva
 Git (`systeminfo.txt`, `systems.txt`, `.gitignore`, `README*.md`, `AGENTS.md`,
 `CLAUDE.md`, `romsync*`).
+
+### Teléfono: sistemas que se dejan fuera
+
+El teléfono recibe todas las consolas hasta la quinta generación (NES, SNES,
+Mega Drive, PS1, N64, Saturn y anteriores) y todas las portátiles (Game Boy,
+GBA, DS, PSP, 3DS, PS Vita). Las consolas de sobremesa de la sexta generación en
+adelante son demasiado pesadas para él, así que sus carpetas se dejan fuera:
+
+| Se deja fuera | Carpeta |
+| --- | --- |
+| Dreamcast | `dreamcast` |
+| GameCube, Wii, Wii U, Switch | `gc`, `wii`, `wiiu`, `switch` |
+| PlayStation 2, 3 y 4 | `ps2`, `ps3`, `ps4` |
+| Xbox, Xbox 360 | `xbox`, `xbox360` |
+
+- Una carpeta que se deja fuera se ignora en los dos lados: nada de ella se
+  copia, se compara ni se borra. Los juegos de esas consolas que ya estén en el
+  teléfono siguen ahí hasta que los borres a mano.
+- `bios/` se sigue copiando entera.
+- `ROMS_PHONE_SKIP` reemplaza la lista, con nombres de carpeta separados por
+  espacios. Un valor vacío sincroniza todo:
+
+  ```bash
+  ROMS_PHONE_SKIP="gc wii ps2" romsync-phone status
+  ROMS_PHONE_SKIP="" romsync-phone status
+  ```
+
+> [!NOTE]
+> La lista se añadió el 2026-10-07 y todavía no se ha ejecutado contra el
+> teléfono.
 
 ### Teléfono: instalación
 
@@ -181,8 +211,9 @@ romsync-phone() {
 }
 ```
 
-`ROMS_DIR` cambia la carpeta de la PC y `ROMS_PHONE_SUBDIR` (por defecto `ROMs`)
-la carpeta dentro del teléfono.
+`ROMS_DIR` cambia la carpeta de la PC, `ROMS_PHONE_SUBDIR` (por defecto `ROMs`)
+la carpeta dentro del teléfono y `ROMS_PHONE_SKIP` los sistemas que se dejan
+fuera.
 
 ### Problemas conocidos
 

@@ -12,6 +12,11 @@ romsync_phone() {
   local phone_dir=""
   local work_dir=""
 
+  # Home consoles from the sixth generation on are too heavy for the phone:
+  # their folders are left out on both sides, never copied and never deleted
+  local skip_default="dreamcast gc ps2 xbox wii ps3 xbox360 wiiu ps4 switch"
+  local skip_systems="${ROMS_PHONE_SKIP-$skip_default}"
+
   # Never synced: the git clone and the files it tracks travel through Git, the rest is junk
   local find_excludes=(
     -not -path './.git/*'
@@ -29,6 +34,13 @@ romsync_phone() {
     -not -name 'desktop.ini'
     -not -name '.DS_Store'
   )
+
+  local rsync_skips=()
+  local system
+  for system in $skip_systems; do
+    find_excludes+=(-not -path "./$system/*")
+    rsync_skips+=(--exclude="/$system/")
+  done
 
   mount_phone() {
     if ! command -v aft-mtp-mount >/dev/null 2>&1; then
@@ -166,7 +178,7 @@ romsync_phone() {
         --exclude='.git/' --exclude='builtin/' --exclude='.thumbnails/' \
         --exclude='systeminfo.txt' --exclude='systems.txt' --exclude='.gitignore' \
         --exclude='README*.md' --exclude='AGENTS.md' --exclude='CLAUDE.md' \
-        --exclude='romsync*' --exclude='.nomedia' \
+        --exclude='romsync*' --exclude='.nomedia' "${rsync_skips[@]}" \
         "$local_dir/" "$phone_dir/" | grep -v '/$')"
       if [[ -z "$differing" ]]; then
         echo -e "\033[32mEvery laptop file has the same content on the phone.\033[0m"
@@ -194,6 +206,9 @@ romsync_phone() {
       echo -e "\033[33mPaths:\033[0m"
       echo "  Laptop: $local_dir"
       echo "  Phone:  Internal storage/$phone_subdir"
+      echo ""
+      echo -e "\033[33mSystems left out (ROMS_PHONE_SKIP):\033[0m"
+      echo "  ${skip_systems:-none}"
       ;;
     esac
   }

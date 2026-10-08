@@ -148,9 +148,9 @@ romsync-phone
 | `romsync-phone mount` | Mounts the phone at `$XDG_RUNTIME_DIR/romsync-phone` and leaves it mounted |
 | `romsync-phone unmount` | Unmounts it |
 
-The first full copy (~31 GB) takes about 45 minutes at ~11 MB/s. If it is
-interrupted or the cable disconnects, run `romsync-phone` again: it continues
-where it stopped.
+The first full copy took about 45 minutes at ~11 MB/s when it was ~31 GB; with
+the heavy consoles left out it is ~16 GB. If it is interrupted or the cable
+disconnects, run `romsync-phone` again: it continues where it stopped.
 
 ### Phone: how it decides what to copy
 
@@ -165,6 +165,35 @@ date:
 Not synced: `.git/`, `builtin/`, `.thumbnails/` and the files Git carries
 (`systeminfo.txt`, `systems.txt`, `.gitignore`, `README*.md`, `AGENTS.md`,
 `CLAUDE.md`, `romsync*`).
+
+### Phone: systems left out
+
+The phone gets every console up to the fifth generation (NES, SNES, Mega Drive,
+PS1, N64, Saturn and older) and every handheld (Game Boy, GBA, DS, PSP, 3DS,
+PS Vita). Home consoles from the sixth generation on are too heavy for it, so
+their folders are left out:
+
+| Left out | Folder |
+| --- | --- |
+| Dreamcast | `dreamcast` |
+| GameCube, Wii, Wii U, Switch | `gc`, `wii`, `wiiu`, `switch` |
+| PlayStation 2, 3 and 4 | `ps2`, `ps3`, `ps4` |
+| Xbox, Xbox 360 | `xbox`, `xbox360` |
+
+- A folder that is left out is ignored on both sides: nothing in it is copied,
+  compared or deleted. Games of those consoles already on the phone stay there
+  until you delete them by hand.
+- `bios/` is still copied whole.
+- `ROMS_PHONE_SKIP` replaces the list, with folder names separated by spaces.
+  An empty value syncs everything:
+
+  ```bash
+  ROMS_PHONE_SKIP="gc wii ps2" romsync-phone status
+  ROMS_PHONE_SKIP="" romsync-phone status
+  ```
+
+> [!NOTE]
+> The list was added on 2026-10-07 and has not been run against the phone yet.
 
 ### Phone: installation
 
@@ -181,8 +210,8 @@ romsync-phone() {
 }
 ```
 
-`ROMS_DIR` changes the PC folder and `ROMS_PHONE_SUBDIR` (default `ROMs`) the
-folder inside the phone.
+`ROMS_DIR` changes the PC folder, `ROMS_PHONE_SUBDIR` (default `ROMs`) the
+folder inside the phone and `ROMS_PHONE_SKIP` the systems left out.
 
 ### Known problems
 
