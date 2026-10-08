@@ -1,7 +1,5 @@
 # ROMs
 
-*[Español](README.es.md)*
-
 ROM folders (one per console) and two scripts that keep the PC copy identical to
 the copy on the external drive and on the phone.
 
@@ -11,7 +9,7 @@ the copy on the external drive and on the phone.
 | `romsync-phone.sh` | Android phone over USB | Linux |
 
 This repository **contains no games or BIOS files**: the `.gitignore` only lets
-through the `systeminfo.txt` files, `systems.txt`, the READMEs, `AGENTS.md` and
+through the `systeminfo.txt` files, `systems.txt`, the README, `AGENTS.md` and
 the scripts. Games travel on the drive or over USB, not through Git.
 
 | | Path |
@@ -224,7 +222,7 @@ folder inside the phone and `ROMS_PHONE_SKIP` the systems left out.
 ## Git on the drive and on the phone
 
 The drive's folder is also a clone of this repository. `romsync` copies the
-scripts and the READMEs as ordinary files but does not touch `.git/`, so
+scripts and the README as ordinary files but does not touch `.git/`, so
 `git status` there shows changes until you run `git pull`. It does not affect
 the games.
 

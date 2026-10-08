@@ -68,7 +68,7 @@ trailing period:
 | --- | --- |
 | `feat` | New script feature or new console |
 | `fix` | Bug fix |
-| `docs` | READMEs and this file |
+| `docs` | The README and this file |
 | `chore` | Cleanup and maintenance |
 
 Work happens directly on `main` and is published with `git push`. Do not rewrite
@@ -76,9 +76,8 @@ history.
 
 ## Documentation
 
-- `README.md` is in English and is the main README. `README.es.md` is its
-  Spanish translation: update the English file first, then mirror the change in
-  the Spanish one.
+- `README.md` is in English and is the only README: there is no translation to
+  keep in step.
 - Keep it concrete: tables, copy-paste commands, real paths.
 - Every new package, command or variable is documented in the README in the same
   change.
