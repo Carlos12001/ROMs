@@ -7,7 +7,7 @@ romsync() {
   local command="${1:-sync}"
   local local_dir="${ROMS_DIR:-$HOME/ROMs}"
   local drive_label="${ROMS_DRIVE_LABEL:-CarlosHD}"
-  local drive_subdir="${ROMS_DRIVE_SUBDIR:-backup/ROMs}"
+  local drive_subdir="${ROMS_DRIVE_SUBDIR:-Backup/ROMs}"
   local drive_dir=""
 
   # Never synced: each side keeps its own git clone, and the rest is OS/RetroArch junk

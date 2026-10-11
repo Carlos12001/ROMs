@@ -8,7 +8,7 @@ function romsync {
 
     # External drive, found by its label (override with $env:ROMS_DRIVE_LABEL / $env:ROMS_DRIVE_SUBDIR)
     $driveLabel = if ($env:ROMS_DRIVE_LABEL) { $env:ROMS_DRIVE_LABEL } else { "CarlosHD" }
-    $driveSubdir = if ($env:ROMS_DRIVE_SUBDIR) { $env:ROMS_DRIVE_SUBDIR } else { "backup\ROMs" }
+    $driveSubdir = if ($env:ROMS_DRIVE_SUBDIR) { $env:ROMS_DRIVE_SUBDIR } else { "Backup\ROMs" }
 
     # Never synced: each side keeps its own git clone, and the rest is OS/RetroArch junk
     $excludeDirs = @(".git", "builtin", '$RECYCLE.BIN', "System Volume Information")

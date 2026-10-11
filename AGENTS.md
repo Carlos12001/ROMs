@@ -21,7 +21,7 @@ external drive `CarlosHD` and with the Android phone. It lives in `~/ROMs`.
 
 | Script | Destination | Compares by | If a file differs |
 | --- | --- | --- | --- |
-| `romsync.sh`, `romsync.ps1` | Drive `CarlosHD`, `backup/ROMs` | Size and date | Newest wins |
+| `romsync.sh`, `romsync.ps1` | Drive `CarlosHD`, `Backup/ROMs` | Size and date | Newest wins |
 | `romsync-phone.sh` | Phone, `ROMs` in internal storage | Name and size | Largest wins |
 
 - `romsync.sh` and `romsync.ps1` must offer the same commands and the same

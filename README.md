@@ -16,7 +16,7 @@ the scripts. Games travel on the drive or over USB, not through Git.
 | --- | --- |
 | Linux | `~/ROMs` |
 | Windows | `%USERPROFILE%\ROMs` |
-| Drive `CarlosHD` (exFAT) | `backup/ROMs` |
+| Drive `CarlosHD` (exFAT) | `Backup/ROMs` |
 | Android phone | `ROMs` in internal storage (`/storage/emulated/0/ROMs`) |
 
 - `<console>/`: the games for each system.
@@ -114,7 +114,7 @@ Paths are changed with environment variables, without editing the scripts:
 | --- | --- | --- |
 | `ROMS_DIR` | `~/ROMs` or `%USERPROFILE%\ROMs` | ROMs folder on the PC |
 | `ROMS_DRIVE_LABEL` | `CarlosHD` | Drive label |
-| `ROMS_DRIVE_SUBDIR` | `backup/ROMs` | Folder inside the drive |
+| `ROMS_DRIVE_SUBDIR` | `Backup/ROMs` | Folder inside the drive |
 
 ```bash
 ROMS_DIR=/mnt/games/ROMs romsync status
