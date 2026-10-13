@@ -28,6 +28,8 @@ Keep their four safeguards when changing them:
   side about to be overwritten.
 - They run only after `yes` is typed.
 - They refuse when the source has no files.
+- `romsync` reads back from the disk what it wrote and compares it with the
+  source, because a copy to the USB drive was once damaged without an error.
 
 Do not add deletion to `sync`, and do not add a flag that skips the question.
 An agent never answers `yes` for the owner without being asked to run that

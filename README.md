@@ -67,6 +67,9 @@ romsync
 - **`sync` never deletes.** A game deleted on one side only comes back at the
   next `sync`. To remove it for good, delete it on the laptop and run
   `romsync to-drive`.
+- A file can reach a USB drive damaged without any error. `sync` does not
+  notice, because size and date still match. Run `romsync verify` after a
+  large copy.
 - `sync` and `status` compare size and date (fast). Only `verify` reads the
   content.
 
@@ -89,6 +92,9 @@ side does not have. Before touching anything it:
 2. Asks to type `yes`. Any other answer cancels.
 3. Refuses to run when the source has no files, so an empty or wrongly
    mounted folder cannot erase the other side.
+4. Reads back from the disk every file it wrote and compares it with the
+   original. A copy that arrived damaged is sent again; if it is still
+   damaged, the command says so and stops.
 
 A long list is cut at 20 files; add `--all` to see every one, for example
 `romsync to-drive --all`. Answer anything but `yes` to use it as a preview.

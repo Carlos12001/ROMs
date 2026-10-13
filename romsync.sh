@@ -107,6 +107,21 @@ romsync() {
     fi
   }
 
+  # Read back from the disk every file just written and print the paths whose
+  # content differs from the source: $1 and $2 are the two folders, the paths
+  # come on stdin. The copy is read with O_DIRECT, so it comes from the disk
+  # and not from memory: a write can be damaged on the way to a USB drive
+  # without any error being reported.
+  damaged_copies() {
+    local path
+    while IFS= read -r path; do
+      if [[ "$(sha1sum <"$1/$path")" != "$(dd if="$2/$path" bs=1M \
+        iflag=direct 2>/dev/null | sha1sum)" ]]; then
+        echo "$path"
+      fi
+    done
+  }
+
   # Make one side an exact copy of the other: $1 is "drive" or "laptop", the
   # side that is written. It shows what would change, asks, and only then
   # copies, replaces and deletes. The git clone and the junk files of the
@@ -172,6 +187,33 @@ romsync() {
     echo -e "\033[32mROMs: $from_name -> $to_name...\033[0m"
     rsync "${base_opts[@]}" --delete -h --info=name1,del1,progress2 \
       "$from_dir/" "$to_dir/" || return 1
+
+    # A damaged copy has the right size and date, so a plain run would not
+    # see it: it is sent once more by content, and then read back again
+    local written bad
+    written="$(awk -F'\t' '$1 != "delete" { print $2 }' <<<"$changes")"
+    if [[ -n "$written" ]]; then
+      echo -e "\033[36mReading back what was written...\033[0m"
+      sync
+      bad="$(damaged_copies "$from_dir" "$to_dir" <<<"$written")"
+      if [[ -n "$bad" ]]; then
+        echo -e "\033[33m$(wc -l <<<"$bad") files did not reach $to_name" \
+          "intact. Copying them again...\033[0m"
+        sed 's/^/  /' <<<"$bad"
+        rsync -t --checksum --files-from=<(echo "$bad") \
+          "$from_dir/" "$to_dir/" || return 1
+        sync
+        bad="$(damaged_copies "$from_dir" "$to_dir" <<<"$bad")"
+        if [[ -n "$bad" ]]; then
+          echo -e "\033[31mStill damaged on $to_name after a second" \
+            "copy:\033[0m"
+          sed 's/^/  /' <<<"$bad"
+          echo -e "\033[31mDo not trust $to_name: check its cable and" \
+            "port, then run 'romsync verify'.\033[0m"
+          return 1
+        fi
+      fi
+    fi
 
     echo -e "\033[36mChecking that both sides match...\033[0m"
     if show_pending; then
