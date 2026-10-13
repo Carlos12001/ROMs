@@ -20,9 +20,14 @@ function romsync {
         Write-Host ""
         Write-Host "Commands:" -ForegroundColor Yellow
         Write-Host "  sync        - Copy new/updated ROMs in both directions (default)"
+        Write-Host "  to-drive    - Make the drive an exact copy of the PC"
+        Write-Host "  to-laptop   - Make the PC an exact copy of the drive"
         Write-Host "  status      - Show what differs, without copying"
         Write-Host "  verify      - Compare file contents by checksum (slow)"
         Write-Host "  open        - Open the drive's ROMs directory in Explorer"
+        Write-Host ""
+        Write-Host "'sync' never deletes. 'to-drive' and 'to-laptop' replace and"
+        Write-Host "delete on the side they write, after showing the list and asking."
         Write-Host ""
         Write-Host "Paths:" -ForegroundColor Yellow
         Write-Host "  PC:    $localDir"
@@ -43,6 +48,74 @@ function romsync {
 
         # Robocopy exit codes: bit 0 = files copied (or pending with /L), 8 or more = failure
         return $LASTEXITCODE
+    }
+
+    # /MIR makes the destination an exact copy: it copies what is missing,
+    # replaces what differs even when the destination is newer (there is no
+    # /XO here) and deletes what the source does not have. Excluded folders
+    # and files are left alone on both sides.
+    function Invoke-Mirror {
+        param ([string]$source, [string]$destination, [switch]$listOnly)
+
+        $options = @($source, $destination, "/MIR", "/FFT", "/COPY:DAT", "/DCOPY:T",
+            "/R:1", "/W:1", "/NP", "/NJH", "/NDL", "/XD") + $excludeDirs + @("/XF") + $excludeFiles
+        if ($listOnly) {
+            $options += @("/L", "/NJS")
+        }
+
+        robocopy @options | Where-Object { $_.Trim() -ne "" } | ForEach-Object { Write-Host $_ }
+
+        return $LASTEXITCODE
+    }
+
+    # Show what a one-way run would do, ask, and only then run it
+    function Invoke-OneWay {
+        param ([string]$source, [string]$destination, [string]$sourceName, [string]$destinationName)
+
+        Write-Host "Comparing by size and date: $destinationName would become an exact copy of $sourceName..." -ForegroundColor Yellow
+
+        # An empty source would erase the whole destination: a drive with the
+        # wrong letter or a folder not yet filled must never do that
+        if (@(Get-RomFiles $source).Count -eq 0) {
+            Write-Host "$sourceName has no files. Refusing to erase $destinationName. Nothing was changed." -ForegroundColor Red
+            return
+        }
+
+        # In the list, "New File" is copied, "Newer" and "Older" are replaced,
+        # and "*EXTRA File" is deleted from the destination
+        $pending = Invoke-Mirror $source $destination -listOnly
+        if ($pending -ge 8) {
+            Write-Host "Robocopy reported errors (see the output above). Nothing was changed." -ForegroundColor Red
+            return
+        }
+        if ($pending -eq 0) {
+            Write-Host "$destinationName is already an exact copy of $sourceName." -ForegroundColor Green
+            return
+        }
+
+        Write-Host ""
+        Write-Host "On ${destinationName}: 'New File' is copied, 'Newer' and 'Older' are replaced, '*EXTRA File' is deleted." -ForegroundColor Yellow
+        $answer = Read-Host "Type 'yes' to make $destinationName equal to $sourceName"
+        if ($answer -ne "yes") {
+            Write-Host "Cancelled. Nothing was changed." -ForegroundColor Yellow
+            return
+        }
+
+        Write-Host "ROMs: $sourceName -> $destinationName..." -ForegroundColor Green
+        $result = Invoke-Mirror $source $destination
+        if ($result -ge 8) {
+            Write-Host "Robocopy reported errors (see the output above)." -ForegroundColor Red
+            return
+        }
+
+        Write-Host "Checking that both sides match..." -ForegroundColor Cyan
+        $pendingDrive = Invoke-Copy $localDir $driveDir -listOnly
+        $pendingLocal = Invoke-Copy $driveDir $localDir -listOnly
+        if (($pendingDrive -band 1) -or ($pendingLocal -band 1)) {
+            Write-Host "Both sides still differ (see the list above)." -ForegroundColor Red
+        } else {
+            Write-Host "PC and $driveLabel are identical." -ForegroundColor Green
+        }
     }
 
     function Get-RomFiles {
@@ -86,6 +159,12 @@ function romsync {
     }
 
     switch ($command) {
+        "to-drive" {
+            Invoke-OneWay $localDir $driveDir "PC" $driveLabel
+        }
+        "to-laptop" {
+            Invoke-OneWay $driveDir $localDir $driveLabel "PC"
+        }
         "sync" {
             Write-Host "Copying new/updated ROMs: PC -> $driveLabel..." -ForegroundColor Green
             $toDrive = Invoke-Copy $localDir $driveDir

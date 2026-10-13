@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # ROM Sync for Android (romsync-phone)
-# Keep your ROMs folder and the copy on your phone identical, in both directions.
+# Keep your ROMs folder and the copy on your phone identical: in both
+# directions without deleting, or in one direction as an exact copy.
 # The phone is reached over USB in "File transfer" (MTP) mode.
 
 romsync_phone() {
@@ -11,6 +12,8 @@ romsync_phone() {
   local mount_dir="${XDG_RUNTIME_DIR:-/tmp}/romsync-phone"
   local phone_dir=""
   local work_dir=""
+  local show_all=false
+  [[ "$2" == "--all" ]] && show_all=true
 
   # Home consoles from the sixth generation on are too heavy for the phone:
   # their folders are left out on both sides, never copied and never deleted
@@ -43,6 +46,12 @@ romsync_phone() {
   done
 
   mount_phone() {
+    # A folder given by hand replaces the phone, for tests
+    if [[ -n "${ROMS_PHONE_DIR:-}" ]]; then
+      phone_dir="$ROMS_PHONE_DIR"
+      return 0
+    fi
+
     if ! command -v aft-mtp-mount >/dev/null 2>&1; then
       echo -e "\033[31mError: aft-mtp-mount not found. Install the 'android-file-transfer' package.\033[0m"
       return 1
@@ -140,8 +149,131 @@ romsync_phone() {
     rsync -r --inplace --whole-file --files-from="$1" -h --info=name1,progress2 "$2/" "$3/"
   }
 
+  # Print a list of paths under a title, cut when it is long
+  show_list() {
+    [[ -s "$1" ]] || return 0
+    local count limit=20
+    count="$(wc -l <"$1")"
+
+    echo -e "$2 ($count files):\033[0m"
+    if [[ "$show_all" == true || "$count" -le "$limit" ]]; then
+      sed 's/^/  /' "$1"
+    else
+      head -n "$limit" "$1" | sed 's/^/  /'
+      echo "  ... and $((count - limit)) more ('--all' lists every file)"
+    fi
+  }
+
+  # Make one side an exact copy of the other: $1 is "phone" or "laptop", the
+  # side that is written. It shows what would change, asks, and only then
+  # copies, replaces and deletes. The systems left out and the files Git
+  # carries are never touched on either side.
+  mirror() {
+    local from_dir to_dir from_list to_list from_name to_name
+    if [[ "$1" == "phone" ]]; then
+      from_dir="$local_dir" to_dir="$phone_dir"
+      from_list="$work_dir/laptop.txt" to_list="$work_dir/phone.txt"
+      from_name="Laptop" to_name="Phone"
+    else
+      from_dir="$phone_dir" to_dir="$local_dir"
+      from_list="$work_dir/phone.txt" to_list="$work_dir/laptop.txt"
+      from_name="Phone" to_name="Laptop"
+    fi
+
+    echo -e "\033[33mComparing by name and size: $to_name would become" \
+      "an exact copy of $from_name...\033[0m"
+    list_files "$local_dir" >"$work_dir/laptop.txt"
+    list_files "$phone_dir" >"$work_dir/phone.txt"
+
+    # An empty source would erase the whole destination: a phone that shows
+    # no files or a folder not yet filled must never do that
+    if [[ ! -s "$from_list" ]]; then
+      echo -e "\033[31m$from_name has no ROMs. Refusing to erase" \
+        "$to_name. Nothing was changed.\033[0m"
+      return 1
+    fi
+
+    # copy: missing in the destination. replace: a different size there.
+    # larger: a replace whose destination copy is the bigger one, which this
+    # script otherwise takes for the complete one. delete: not in the source.
+    awk -F'\t' -v dir="$work_dir" '
+      FNR == NR { from[$2] = $1; next }
+      {
+        to[$2] = $1
+        if (!($2 in from)) print $2 > (dir "/delete.txt")
+      }
+      END {
+        for (path in from) {
+          if (!(path in to)) print path > (dir "/copy.txt")
+          else if (from[path] + 0 != to[path] + 0) {
+            print path > (dir "/replace.txt")
+            if (to[path] + 0 > from[path] + 0) print path > (dir "/larger.txt")
+          }
+        }
+      }
+    ' "$from_list" "$to_list"
+
+    local kind
+    for kind in copy replace larger delete; do
+      touch "$work_dir/$kind.txt"
+      LC_ALL=C sort -o "$work_dir/$kind.txt" "$work_dir/$kind.txt"
+    done
+
+    if [[ ! -s "$work_dir/copy.txt" && ! -s "$work_dir/replace.txt" &&
+      ! -s "$work_dir/delete.txt" ]]; then
+      echo -e "\033[32m$to_name is already an exact copy of" \
+        "$from_name.\033[0m"
+      return 0
+    fi
+
+    show_list "$work_dir/copy.txt" "\033[32mCopy to $to_name"
+    show_list "$work_dir/replace.txt" "\033[33mReplace on $to_name"
+    show_list "$work_dir/delete.txt" "\033[31mDelete from $to_name"
+    show_list "$work_dir/larger.txt" \
+      "\033[31mLarger on $to_name, would be lost"
+
+    echo ""
+    echo -e "\033[33mOn $to_name: $(wc -l <"$work_dir/copy.txt") to copy," \
+      "$(wc -l <"$work_dir/replace.txt") to replace," \
+      "$(wc -l <"$work_dir/delete.txt") to delete.\033[0m"
+
+    local answer
+    read -r -p "Type 'yes' to make $to_name equal to $from_name: " answer
+    if [[ "$answer" != "yes" ]]; then
+      echo -e "\033[33mCancelled. Nothing was changed.\033[0m"
+      return 1
+    fi
+
+    # A replaced file is removed first: MTP cannot shrink a file in place
+    local path
+    while IFS= read -r path; do
+      rm -f -- "$to_dir/$path" || return 1
+    done < <(cat "$work_dir/delete.txt" "$work_dir/replace.txt")
+
+    cat "$work_dir/copy.txt" "$work_dir/replace.txt" >"$work_dir/send.txt"
+    if [[ -s "$work_dir/send.txt" ]]; then
+      echo -e "\033[32mCopying ROMs: $from_name -> $to_name" \
+        "($(wc -l <"$work_dir/send.txt") files)...\033[0m"
+      copy_files "$work_dir/send.txt" "$from_dir" "$to_dir" || return 1
+    fi
+
+    echo -e "\033[36mChecking that both sides match...\033[0m"
+    if show_pending; then
+      echo -e "\033[32mLaptop and phone are identical.\033[0m"
+    else
+      echo -e "\033[31mBoth sides still differ (see the list above).\033[0m"
+      return 1
+    fi
+  }
+
   execute_commands() {
     case "$command" in
+    "to-phone")
+      mirror phone
+      ;;
+    "to-laptop")
+      mirror laptop
+      ;;
     "sync")
       compare
 
@@ -198,10 +330,16 @@ romsync_phone() {
       echo ""
       echo -e "\033[33mCommands:\033[0m"
       echo "  sync        - Copy missing ROMs in both directions (default)"
+      echo "  to-phone    - Make the phone an exact copy of the laptop"
+      echo "  to-laptop   - Make the laptop an exact copy of the phone"
       echo "  status      - Show what differs, without copying"
       echo "  verify      - Compare file contents by checksum (slow)"
       echo "  mount       - Mount the phone and leave it mounted"
       echo "  unmount     - Unmount the phone"
+      echo ""
+      echo "'sync' never deletes. 'to-phone' and 'to-laptop' replace and"
+      echo "delete on the side they write, after showing the list and asking."
+      echo "Add '--all' to list every file."
       echo ""
       echo -e "\033[33mPaths:\033[0m"
       echo "  Laptop: $local_dir"
@@ -214,7 +352,7 @@ romsync_phone() {
   }
 
   case "$command" in
-  "sync" | "status" | "verify" | "mount") ;;
+  "sync" | "status" | "verify" | "mount" | "to-phone" | "to-laptop") ;;
   "unmount")
     unmount_phone
     echo -e "\033[32mPhone unmounted.\033[0m"
@@ -234,6 +372,7 @@ romsync_phone() {
   # A dead mount does not count: it is replaced and removed again afterwards
   local was_mounted=false
   is_mounted && ls "$mount_dir" >/dev/null 2>&1 && was_mounted=true
+  [[ -n "${ROMS_PHONE_DIR:-}" ]] && was_mounted=true
 
   mount_phone || return 1
 

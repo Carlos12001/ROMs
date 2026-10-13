@@ -14,10 +14,24 @@ external drive `CarlosHD` and with the Android phone. It lives in `~/ROMs`.
 - `builtin/` is created by RetroArch and belongs neither to the repository nor
   to the copies.
 
-## The scripts do not delete
+## Deleting is only done on purpose
 
-`romsync` and `romsync-phone` only copy. Do not add deletion, `--delete` or
-`/PURGE` unless the user asks: a mistake there removes games on both sides.
+`sync`, the default command, only copies and never deletes. Deletion exists
+only in the one-direction commands the owner asked for on 2026-10-12:
+`to-drive` and `to-laptop` in `romsync`, `to-phone` and `to-laptop` in
+`romsync-phone`. They make the named side an exact copy of the other.
+
+Keep their four safeguards when changing them:
+
+- They print what would be copied, replaced and deleted before doing it.
+- They warn about files that are newer (or, on the phone, larger) on the
+  side about to be overwritten.
+- They run only after `yes` is typed.
+- They refuse when the source has no files.
+
+Do not add deletion to `sync`, and do not add a flag that skips the question.
+An agent never answers `yes` for the owner without being asked to run that
+direction.
 
 | Script | Destination | Compares by | If a file differs |
 | --- | --- | --- | --- |
@@ -36,6 +50,14 @@ external drive `CarlosHD` and with the Android phone. It lives in `~/ROMs`.
 bash -n romsync.sh romsync-phone.sh    # Syntax
 ./romsync.sh status                    # Copies nothing
 ./romsync-phone.sh status              # Copies nothing
+```
+
+The one-direction commands can be tried without the drive or the phone:
+`ROMS_DRIVE_DIR` and `ROMS_PHONE_DIR` point the scripts at a plain folder.
+
+```bash
+ROMS_DIR=/tmp/a ROMS_DRIVE_DIR=/tmp/b ./romsync.sh to-drive
+ROMS_DIR=/tmp/a ROMS_PHONE_DIR=/tmp/b ./romsync-phone.sh to-phone
 ```
 
 - Always run `status` before `sync` and review the list.

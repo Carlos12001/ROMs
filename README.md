@@ -53,6 +53,8 @@ romsync
 | Command | What it does |
 | --- | --- |
 | `romsync` / `romsync sync` | Copies new or updated files in both directions and checks both sides match |
+| `romsync to-drive` | Makes the drive an exact copy of the laptop: copies, replaces and deletes there |
+| `romsync to-laptop` | Makes the laptop an exact copy of the drive |
 | `romsync status` | Lists what differs, without copying |
 | `romsync verify` | Compares every file's content by checksum (several minutes with ~31 GB) |
 | `romsync open` | Opens the drive's ROMs folder |
@@ -62,10 +64,34 @@ romsync
 
 - A file that exists on one side only is copied to the other.
 - If it exists on both but differs in size or date, the **newest** wins.
-- **It never deletes.** To remove a game, delete it on both sides; if you delete
-  it on one only, the next `sync` restores it.
+- **`sync` never deletes.** A game deleted on one side only comes back at the
+  next `sync`. To remove it for good, delete it on the laptop and run
+  `romsync to-drive`.
 - `sync` and `status` compare size and date (fast). Only `verify` reads the
   content.
+
+### One direction: to-drive and to-laptop
+
+`sync` only adds. When one side is the right one and the other must become
+equal to it, name the side to write:
+
+```bash
+romsync to-drive      # The drive becomes what the laptop is
+romsync to-laptop     # The laptop becomes what the drive is
+```
+
+On the side that is written, the command copies what is missing, replaces
+what differs **even when that copy is newer**, and deletes what the other
+side does not have. Before touching anything it:
+
+1. Lists what it would copy, replace and delete, and separately the files
+   that are newer on the side about to be overwritten.
+2. Asks to type `yes`. Any other answer cancels.
+3. Refuses to run when the source has no files, so an empty or wrongly
+   mounted folder cannot erase the other side.
+
+A long list is cut at 20 files; add `--all` to see every one, for example
+`romsync to-drive --all`. Answer anything but `yes` to use it as a preview.
 
 Not synced: `.git/`, `builtin/` (history created by RetroArch) and system files
 (`$RECYCLE.BIN`, `System Volume Information`, `.Trash-*`, `Thumbs.db`,
@@ -104,7 +130,9 @@ It also runs without installing: `.\romsync.ps1 status`.
 
 > [!WARNING]
 > `romsync.ps1` has not been tested on Windows yet; `romsync.sh` has. The first
-> time, run `romsync status` and review the list before `romsync sync`.
+> time, run `romsync status` and review the list before `romsync sync`. Its
+> `to-drive` and `to-laptop` delete files and are untested too: read the list
+> they print with care before answering `yes`.
 
 ### Configuration
 
@@ -141,6 +169,8 @@ romsync-phone
 | Command | What it does |
 | --- | --- |
 | `romsync-phone` / `romsync-phone sync` | Copies missing ROMs in both directions and checks both sides match |
+| `romsync-phone to-phone` | Makes the phone an exact copy of the laptop: copies, replaces and deletes there |
+| `romsync-phone to-laptop` | Makes the laptop an exact copy of the phone |
 | `romsync-phone status` | Lists what differs, without copying |
 | `romsync-phone verify` | Compares content by checksum (reads the whole phone copy, very slow) |
 | `romsync-phone mount` | Mounts the phone at `$XDG_RUNTIME_DIR/romsync-phone` and leaves it mounted |
@@ -158,7 +188,13 @@ date:
 - A file that exists on one side only is copied to the other.
 - If it exists on both with a different size, the **largest** wins (the small
   one is almost always an interrupted copy).
-- **It never deletes.** To remove a game, delete it on both sides.
+- **`sync` never deletes.** To remove a game for good, delete it on the laptop
+  and run `romsync-phone to-phone`.
+- `to-phone` and `to-laptop` work like the drive commands above: they list
+  what would be copied, replaced and deleted, ask for `yes`, and refuse an
+  empty source. As there are no dates, the warning is for files that are
+  **larger** on the side about to be overwritten. The systems left out are
+  never touched, in either direction.
 
 Not synced: `.git/`, `builtin/`, `.thumbnails/` and the files Git carries
 (`systeminfo.txt`, `systems.txt`, `.gitignore`, `README*.md`, `AGENTS.md`,
